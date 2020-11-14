@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html {{ function('language_attributes') }}>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{{ function('wp_head') }}
+</head>
+<body {{ function('body_class') }}>
+	<header class="header h-12"></header>
+	<div class="flex">
+		<aside class="aside pt-12 min-h-screen">
+			<nav>
+				<ul>
+					{% for item in menu.items %}
+						<li class="px-8 py-3 {{ item.classes|join(' ') }}">
+							<a class="flex items-center" href="{{ item.link }}">
+								<img src="{{ item.meta('icon') }}">
+								{{ item.title }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</aside>
+		<main class="container mx-auto my-12">
+			{% block content %}{% endblock %}
+		</main>
+	</div>
+	{{ function('wp_footer') }}
+</body>
+</html>

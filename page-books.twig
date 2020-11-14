@@ -1,0 +1,66 @@
+{% extends "base.twig" %}
+{% block content %}
+	<h2 class="text-2xl font-bold">Quickly find your book!</h2>
+	<div class="mt-5 mb-6 flex justify-between">
+		<div class="text-xs">
+			<ul class="flex items-center">
+				{% for category in categories %}
+					<li class="border border-black mr-2 {% if category.term_id == request.get.category %} bg-black text-white {% endif %}">
+						<a href="{{ currentURL }}?category={{ category.term_id }}&color={{ request.get.color ? request.get.color : 0 }}&sort={{ request.get.sort ? request.get.sort : 0 }}" class="px-2">
+							{{ category.name }}
+						</a>
+					<li>
+				{% endfor %}
+			</ul>
+			<ul class="mt-2 flex items-center">
+				{% for color in colors %}
+						<li class="border border-black mr-2 {% if color.term_id == request.get.color %} bg-black text-white {% endif %}">
+							<a href="{{ currentURL }}?category={{ request.get.category ? request.get.category : 0 }}&color={{ color.term_id }}&sort={{ request.get.sort ? request.get.sort : 0 }}" class="px-2">
+								{{ color.name }}
+							</a>
+						<li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="mb-2 flex items-end leading-none">
+			Sort results on
+			<form action="" method="get" class="ml-2">
+				<input type="hidden" name="category" value="{{ request.get.category ? request.get.category : 0 }}" />
+				<input type="hidden" name="color" value="{{ request.get.color ? request.get.color : 0 }}" />
+				<select name="sort" onchange="this.form.submit()" class="h-5 bg-white border border-black text-xs">
+					{% for sort in sortOptions %}
+						<option value="{{ sort.name }}" {% if sort.name == request.get.sort %}selected{% endif %}>
+							{{ sort.title }}
+						</option>
+					{% endfor %}
+				</select>
+			</form>
+		</div>
+	</div>
+	<div class="book-list grid grid-cols-3 gap-12">
+		{% for book in books %}
+			<article>
+				<img src="{{ book.thumbnail.src('medium_large') }}" class="my-thumb-class" alt="Image for {{ book.title }}" loading="lazy" />
+				<h3 class="mt-4 font-bold">{{ book.title }}</h3>
+				<div class="text-xs">{{ book.meta('category') }}</div>
+				<div class="author text-xs">Written by {{ book.meta('author') }}</div>
+			</article>
+		{% endfor %}
+		{% if books is empty %}
+			Not found any book
+		{% endif %}
+	</div>
+	<div class="pagination mt-16 text-xs">
+		<ul class="flex">
+			{% for page in pagination.pages %}
+				<li>
+					{% if page.link %}
+						<a href="{{ page.link }}" class="mr-3 {{ page.class }}">{{ page.title }}</a>
+					{% else %}
+						<span class="mr-3 {{ page.class }}">{{ page.title }}</span>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+/*!
+	Theme Name: Book
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* purgecss start ignore */
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.header {
+	background: #4F4F4F;
+}
+
+.aside {
+	background: #F2F2F2;
+	width: 243px;
+	
+	ul {
+		a {
+			color: #828282;
+		}
+
+		img {
+			margin-right: 10px;
+		}
+
+		.current-menu-item {
+			background: rgba(196, 196, 196, 0.2);
+			font-weight: bold;
+
+			a {
+				color: #000;
+			}
+		}
+	}
+}
+
+.container {
+	max-width: 842px;
+}
+
+.book-list {
+	.author { color: #828282 }
+}
+
+.pagination {
+	a { color: #BDBDBD }
+}
+
+/* purgecss end ignore */
